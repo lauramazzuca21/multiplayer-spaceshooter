@@ -7,6 +7,9 @@ public class LaunchURL : MonoBehaviour {
 
 	public void urlLinkOrWeb() 
 	{
-		Application.OpenURL(URL);
+		#if !UNITY_EDITOR
+            Application.OpenURL(URL);
+        #endif
+
 	}
 }

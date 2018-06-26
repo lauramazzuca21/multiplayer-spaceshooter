@@ -11,21 +11,39 @@ public class ProgressBar : MonoBehaviour {
 	[Header("VARIABLES (IN-GAME)")]
 	public bool isOn;
 	public bool restart;
+	private bool _firstRecharge = true;
 	[Range(0, 100)] public float currentPercent;
 	[Range(0, 100)] public int speed;
 
+
+	private void Start()
+	{
+		
+	}
+
+
 	void Update ()
 	{
-		if (currentPercent < 100 && isOn == true) 
+		if (currentPercent < 100 && isOn == true && _firstRecharge) 
 		{
 			currentPercent += speed * Time.deltaTime;
+
+			if (currentPercent >= 100)
+            {
+				_firstRecharge = false;
+				currentPercent = 100;
+
+            }
+
 		}
 
-		if (currentPercent == 100 || currentPercent >= 100 && restart == true) 
-		{
-			currentPercent = 0;
-		}
-		loadingBar.GetComponent<Image> ().fillAmount = currentPercent / 100;
-		textPercent.GetComponent<Text> ().text = ((int)currentPercent).ToString ("F0") + "%";
+		loadingBar.GetComponent<Image>().fillAmount = currentPercent / 100;
+        textPercent.GetComponent<Text>().text = ((int)currentPercent).ToString("F0") + "%";      
+
+	}
+
+    public void UpdateHealthBar(float health)
+	{
+		currentPercent = health;
 	}
 }

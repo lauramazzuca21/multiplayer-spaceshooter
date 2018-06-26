@@ -7,10 +7,11 @@ public class FixedJoystick : Joystick
     
 
     Vector2 joystickPosition = Vector2.zero;
-    private Camera cam = new Camera();
+    private Camera cam;
 
     void Start()
     {
+		cam = GetComponent<Camera>();
         joystickPosition = RectTransformUtility.WorldToScreenPoint(cam, background.position);
     }
 
@@ -23,7 +24,7 @@ public class FixedJoystick : Joystick
     }
 
 	//IPointerDownHandler - OnPointerDown - Called when a pointer is pressed on the object
-    public override void OnPointerDown(PointerEventData eventData)
+	public override void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
     }

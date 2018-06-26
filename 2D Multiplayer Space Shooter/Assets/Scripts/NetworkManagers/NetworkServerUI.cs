@@ -12,7 +12,7 @@ using UnityStandardAssets.CrossPlatformInput;
 public class NetworkServerUI : MonoBehaviour {
 
 	public int ActivePlayers { get; private set; }
-	private List<Choice> playersChoices;
+	private LinkedList<Choice> playersChoices;
 	private ShipsManager _shipsManager;
 	private string _currentScene;
 	[SerializeField]
@@ -25,7 +25,7 @@ public class NetworkServerUI : MonoBehaviour {
     CrossPlatformInputManager.VirtualAxis m_HVAxis;
     CrossPlatformInputManager.VirtualAxis m_VVAxis;
 
-    int ID;
+    int IDFirstPlayer;
     float hDelta, vDelta;
     string horizontalAxis = "Horizontal1";
     string verticalAxis = "Vertical1";
@@ -69,37 +69,52 @@ public class NetworkServerUI : MonoBehaviour {
         msg.value = message.ReadMessage<StringMessage>().value;
         string[] deltas = msg.value.Split('|');
 
-		if (_currentScene == Constants.CONNECTION_SCENE && deltas.Length == 2)
+		if (_currentScene == Constants.CONNECTION_SCENE)
         {
-			Choice currentChoice;
-			currentChoice.IDPlayer = deltas[0];
-			currentChoice.shipChosen = deltas[1];
-
-			if (!playersChoices.Contains(currentChoice))
+			if(deltas.Length == 2)
 			{
-				playersChoices.Add(currentChoice);
+				Choice currentChoice;
+                currentChoice.IDPlayer = deltas[0];
+                currentChoice.shipChosen = deltas[1];
 
-				if (playersChoices.ToArray().Length == 1)
-				{
-					msg.value = Players.FIRST.ToString();
-					NetworkServer.SendToClient();
-				}
+                if (!playersChoices.Contains(currentChoice))
+                {
+                    playersChoices.AddLast(currentChoice);
+
+                    if (playersChoices.Count == 1)
+                    {
+                        msg.value = Players.FIRST.ToString();
+						IDFirstPlayer = Convert.ToInt32(currentChoice.IDPlayer);
+						NetworkServer.SendToClient(IDFirstPlayer, 888, msg);
+                    }
+                }
 			}
+			else if (deltas.Length == 3 && Convert.ToInt32(deltas[0]) == IDFirstPlayer)
+			{
+				m_HVAxis.Update(Convert.ToSingle(deltas[1]));
+                m_VVAxis.Update(Convert.ToSingle(deltas[2]));
+				hDelta = Convert.ToSingle(deltas[1]);
+                vDelta = Convert.ToSingle(deltas[2]);
+                
+			}
+
         }
+
 		else if (_currentScene == Constants.SETUP_SCENE || _currentScene == Constants.GAMEOVER_SCENE)
         {
-			m_HVAxis.Update(Convert.ToSingle(deltas[0]));
-            m_VVAxis.Update(Convert.ToSingle(deltas[1]));
+			if (deltas[0] == playersChoices.First<Choice>().IDPlayer)
+			{
+				
+			}
         }
 		else if (_currentScene == Constants.GAMEPLAY_SCENE)
         {
 
         }
 
+
         
-        hDelta = Convert.ToSingle(deltas[0]);
-        vDelta = Convert.ToSingle(deltas[1]);
-        ID = (int) Convert.ToSingle(deltas[2]);
+        
 
         //foreach(Ship s in ships)
         //{

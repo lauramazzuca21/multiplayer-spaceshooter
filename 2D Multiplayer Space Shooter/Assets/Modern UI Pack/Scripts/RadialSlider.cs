@@ -65,7 +65,12 @@ public class RadialSlider: MonoBehaviour, IPointerEnterHandler, IPointerDownHand
 		
 		if (ray != null && input != null) 
 		{
+			#if UNITY_EDITOR
+			while (UnityEditor.EditorApplication.isPlaying)
+            #else
 			while (Application.isPlaying) 
+			#endif
+
 			{                    
 				if (isPointerDown) 
 				{

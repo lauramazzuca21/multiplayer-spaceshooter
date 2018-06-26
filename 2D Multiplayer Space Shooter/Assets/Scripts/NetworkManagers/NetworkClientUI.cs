@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -9,7 +10,8 @@ public class NetworkClientUI : MonoBehaviour
 {
     static NetworkClient client;
 	static public Ships ShipChosen { get; set; }
-	static private string playerID;
+	static private int playerID;
+	private bool _isFirstPlayer = false;
 	private Text _codeText;
 	private LevelManager _levelManager;
 	//private 
@@ -25,12 +27,31 @@ public class NetworkClientUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-		playerID = Network.player.ipAddress;
+		DontDestroyOnLoad(gameObject);
+
         client = new NetworkClient();
+		playerID = client.connection.connectionId;
 		_levelManager = FindObjectOfType<LevelManager>();
+
+		client.RegisterHandler(888, ClientReceiveMessage);
     }
-    
-    public void Connect()
+
+	private void ClientReceiveMessage(NetworkMessage networkMessage)
+	{
+		StringMessage msg = new StringMessage();
+		msg.value = networkMessage.ReadMessage<StringMessage>().value;
+        string[] deltas = msg.value.Split('|');
+
+		if (deltas[0] == Players.FIRST.ToString()) _isFirstPlayer = true;
+
+		else if (deltas[0] == "health") 
+		{
+			float health = Convert.ToSingle(deltas[1]);
+			FindObjectOfType<ProgressBar>().UpdateHealthBar(health);
+		}
+	}
+
+	public void Connect()
     {
 		Network.Connect("192.168.1.141", 25000, _codeText.text);
 
@@ -57,5 +78,6 @@ public class NetworkClientUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		
     }
 }
