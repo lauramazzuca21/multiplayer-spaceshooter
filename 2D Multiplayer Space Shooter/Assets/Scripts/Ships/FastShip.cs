@@ -36,28 +36,28 @@ public class FastShip : Ship
     }
 
 	// Update is called once per frame
-	override protected void Update()
-    {      
-		Movement();
-    }
-
-    protected override void Movement()
-    {
+		override protected void Update()
+		{      
+			//Movement();
+		}
+	 
+	protected override void Movement()
+	{ }
 		/* Input.GetAxis is what we want to have 
         * so it's independant from both keyboard and joystick */
 
 
         //** ROTATE THE SHIP **//
-        Quaternion rot = transform.rotation;
+/*        Quaternion rot = transform.rotation;
         float z = rot.eulerAngles.z;
 
         //minus to get the std rotaton (dxdx, sxsx)
         z -= Input.GetAxis("Horizontal") * RotSpeed * Time.deltaTime;
         rot = Quaternion.Euler(0, 0, z);
         transform.rotation = rot;
-
+*/
         //** MOVE THE SHIP **//
-        Vector3 pos = transform.position;
+/*        Vector3 pos = transform.position;
 
         // Input.GetAxis returns a FLOAT between -1.0 and 1.0 0 if not pressed
         Vector3 newPos = new Vector3(0, Input.GetAxis("Vertical") * MaxSpeed * Time.deltaTime, 0);
@@ -68,17 +68,39 @@ public class FastShip : Ship
         pos = this.BoundariesRestrictions(pos);
 
         transform.position = pos;
-
+*/
 		/* Also valid, unless u wanna do stuff in betweed :
          * transform.Translate( new Vector3(0, Input.GetAxis("Vertical") * maxSpeed * Time.deltaTime))*/
-    }     
+ /*   }     */
 
 	override public void ResetHealth()
     {
         _lifeHandler.Health = HEALTH;
     }
    
-	public override void Movement(float h, float v){}
+	public override void Movement(float horizontalAxis, float verticalAxis){
+		//** ROTATE THE SHIP **//
+        Quaternion rot = transform.rotation;
+        float z = rot.eulerAngles.z;
+
+        //minus to get the std rotaton (dxdx, sxsx)
+		z -= horizontalAxis * RotSpeed * Time.deltaTime;
+        rot = Quaternion.Euler(0, 0, z);
+        transform.rotation = rot;
+
+        //** MOVE THE SHIP **//
+       Vector3 pos = transform.position;
+
+        // Input.GetAxis returns a FLOAT between -1.0 and 1.0 0 if not pressed
+		Vector3 newPos = new Vector3(0, verticalAxis * MaxSpeed * Time.deltaTime, 0);
+
+        pos += rot * newPos;
+
+        //RESTRICT player to the cameras boundaries
+        pos = this.BoundariesRestrictions(pos);
+
+        transform.position = pos;
+	}
 
 
 }

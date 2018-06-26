@@ -57,7 +57,7 @@ public abstract class Ship : MonoBehaviour
     protected abstract void Update();
 
     protected abstract void Movement();
-    public abstract void Movement(float h, float v);
+	public abstract void Movement(float horizontalAxis, float verticalAxis);
 
     public abstract void ResetHealth();
 

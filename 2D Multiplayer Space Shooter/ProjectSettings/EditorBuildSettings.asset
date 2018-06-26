@@ -8,19 +8,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PC_Game/00_MainMenu.unity
     guid: 1b3393f1c61af45e8ad4cb7d6254a025
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PC_Game/01a_Connection.unity
     guid: 36fdd709ed2e94821b1d92d3fef4ff2f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PC_Game/01b_Setup.unity
     guid: f6d8f815c3e4941fb9103add0f1979e3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PC_Game/02_GamePlay.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PC_Game/03_Scores.unity
     guid: b047ff7408f1f477a8459ef6f488ff61
-  - enabled: 0
+  - enabled: 1
+    path: Assets/Scenes/Smartphone_Controller/01_ChooseShip.unity
+    guid: a806bfc59d7c94ac8b3093937e211394
+  - enabled: 1
     path: Assets/Scenes/Smartphone_Controller/02_Controller.unity
     guid: 18bef4ee05d85400b86e7f57b4fd3a91
   m_configObjects: {}

@@ -8,13 +8,28 @@ using UnityEngine.UI;
 
 public class NetworkClientUI : MonoBehaviour
 {
+
+	static NetworkClientUI _instance = null;
+
+    //this is best to implement the Singleton pattern for MusicPlayer instance
+    private void Awake()
+    {
+        if (_instance != null) { Destroy(gameObject); }
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
     static NetworkClient client;
 	static public Ships ShipChosen { get; set; }
 	static private int playerID;
 	private bool _isFirstPlayer = false;
+	[SerializeField]
 	private Text _codeText;
+
 	private LevelManager _levelManager;
-	//private 
 
     private void OnGUI()
     {
@@ -27,14 +42,41 @@ public class NetworkClientUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-		DontDestroyOnLoad(gameObject);
-
         client = new NetworkClient();
-		playerID = client.connection.connectionId;
 		_levelManager = FindObjectOfType<LevelManager>();
 
 		client.RegisterHandler(888, ClientReceiveMessage);
     }
+
+    //this function gets called once the player hits the "done" button on screen and automatically sends the
+    //choice of ship and passwork. Does not connect until 
+	public void Connect()
+    {
+		//client.Connect("192.168.43.45", 25000, _codeText.text);
+        client.Connect("192.168.43.45", 25000);
+
+		StartCoroutine(this.Wait());
+
+		//Debug.Log("CLIENT IS CONNECTED!");
+			//playerID = client.connection.connectionId;
+	      
+    }
+
+	private IEnumerator Wait()
+	{
+		yield return new WaitForSeconds(3f);
+
+		if (client.isConnected)
+        {
+			playerID = client.connection.connectionId;
+			StringMessage msg = new StringMessage();
+			msg.value = playerID + "|" + ShipChosen;
+            client.Send(888, msg);
+            _levelManager.LoadScene(Constants.CONTROLLER_SCENE);
+        }
+      
+	}
+
 
 	private void ClientReceiveMessage(NetworkMessage networkMessage)
 	{
@@ -42,7 +84,11 @@ public class NetworkClientUI : MonoBehaviour
 		msg.value = networkMessage.ReadMessage<StringMessage>().value;
         string[] deltas = msg.value.Split('|');
 
-		if (deltas[0] == Players.FIRST.ToString()) _isFirstPlayer = true;
+		if (deltas[0] == Players.FIRST.ToString())
+		{
+			_isFirstPlayer = true;
+
+		}
 
 		else if (deltas[0] == "health") 
 		{
@@ -51,28 +97,25 @@ public class NetworkClientUI : MonoBehaviour
 		}
 	}
 
-	public void Connect()
-    {
-		Network.Connect("192.168.1.141", 25000, _codeText.text);
 
-		if (client.isConnected)
-		{
-			StringMessage msg = new StringMessage();
-			msg.value = playerID + "|" + (int)ShipChosen;
-			_levelManager.LoadScene(Constants.CONTROLLER_SCENE);
-		}
-	}
 
 	static public void SendControllerInfo(float hDelta, float vDelta)
     {
-		if (Network.isClient)
-        {
-            StringMessage msg = new StringMessage();
-			msg.value = hDelta + "|" + vDelta + "|" +  ShipChosen + "|";
-            client.Send(888, msg);
-            Debug.Log("Message Sent!");
-        }
-        else Debug.Log("Accipicchia!");
+		StringMessage msg = new StringMessage();
+		msg.value = playerID + "|" + hDelta + "|" +  vDelta;
+
+        client.Send(888, msg);
+        Debug.Log("Message Sent!");
+       
+    }
+
+	static public void FireButton(bool fireStatus)
+    {
+        StringMessage msg = new StringMessage();
+		msg.value = playerID + "|" + fireStatus;
+        client.Send(888, msg);
+        Debug.Log("Message Sent!");
+
     }
 
     // Update is called once per frame

@@ -5,18 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
-	//static LevelManager _instance = null;
+	static LevelManager _instance = null;
 
 
-	//private void Awake()
-    //{
-    //    if (_instance != null) { Destroy(gameObject); }
-    //    else
-    //    {
-    //        _instance = this;
-    //        DontDestroyOnLoad(gameObject);
-    //    }
-    //}   
+	private void Awake()
+    {
+        if (_instance != null) { Destroy(gameObject); }
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }   
 
     public void LoadScene(string name)
 	{

@@ -74,6 +74,6 @@ public class ResistantShip : Ship
         _lifeHandler.Health = HEALTH;
     }
 
-	public override void Movement(float h, float v){}
+	public override void Movement(float horizontalAxis, float verticalAxis){}
 
 }

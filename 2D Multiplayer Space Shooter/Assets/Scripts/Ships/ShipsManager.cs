@@ -16,11 +16,11 @@ public class ShipsManager : MonoBehaviour
 
     private bool[] _isRespawning;
 
-	private Ships[] _playersChoices;
+	private Choice[] _playersChoices;
 	private int _activePlayers;
 
     // Use this for initialization
-	public void InstantiateShips(int activePlayers, Ships[] choices)
+	public GameObject[] InstantiateShips(int activePlayers, Choice[] choices)
     {
         instantiatedShips = new GameObject[activePlayers];
 		_isRespawning = new bool[activePlayers];
@@ -36,10 +36,11 @@ public class ShipsManager : MonoBehaviour
         {
 			if (j < _activePlayers)
             {
-				instantiatedShips[j] = Instantiate(shipsPrefabs[(int) _playersChoices[j]], child);
+				
+				instantiatedShips[j] = Instantiate(shipsPrefabs[(int) _playersChoices[j].shipChosen], child);
                 SpriteRenderer spriteRenderer = instantiatedShips[j].GetComponent<SpriteRenderer>();
                 
-				switch ((int)_playersChoices[j])
+				switch ((int)_playersChoices[j].shipChosen)
 				{
 					case 0:
 						spriteRenderer.sprite = FastShipSprites[j];
@@ -67,6 +68,8 @@ public class ShipsManager : MonoBehaviour
 
             j++;
         }
+
+		return instantiatedShips;
     }
 
 
@@ -102,4 +105,6 @@ public class ShipsManager : MonoBehaviour
 		}
 
     }
+
+    //public 
 }

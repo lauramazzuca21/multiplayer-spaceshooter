@@ -10,7 +10,7 @@ public enum Players { FIRST, SECOND, THIRD, FOURTH };
 
 public struct Choice {
 	public string IDPlayer;
-	public string shipChosen;
+	public int shipChosen;
 }
 
 
