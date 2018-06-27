@@ -19,8 +19,10 @@ public class ShipsManager : MonoBehaviour
 	private Choice[] _playersChoices;
 	private int _activePlayers;
 
+	public int ActivePlayers { get { return this._activePlayers; } }
+
     // Use this for initialization
-	public GameObject[] InstantiateShips(int activePlayers, Choice[] choices)
+	public void InstantiateShips(int activePlayers, Choice[] choices)
     {
         instantiatedShips = new GameObject[activePlayers];
 		_isRespawning = new bool[activePlayers];
@@ -29,18 +31,16 @@ public class ShipsManager : MonoBehaviour
         
 
         int j = 0;
-
-        //ogni nave deve chiamre il suo? se si come?
-
+       
         foreach (Transform child in transform)
         {
 			if (j < _activePlayers)
             {
 				
-				instantiatedShips[j] = Instantiate(shipsPrefabs[(int) _playersChoices[j].shipChosen], child);
+				instantiatedShips[j] = Instantiate(shipsPrefabs[_playersChoices[j].shipChosen], child);
                 SpriteRenderer spriteRenderer = instantiatedShips[j].GetComponent<SpriteRenderer>();
                 
-				switch ((int)_playersChoices[j].shipChosen)
+				switch (_playersChoices[j].shipChosen)
 				{
 					case 0:
 						spriteRenderer.sprite = FastShipSprites[j];
@@ -69,7 +69,6 @@ public class ShipsManager : MonoBehaviour
             j++;
         }
 
-		return instantiatedShips;
     }
 
 
@@ -106,5 +105,14 @@ public class ShipsManager : MonoBehaviour
 
     }
 
-    //public 
+	public void MovePlayer(int idPlayer, float horizontalAxis, float verticalAxis)
+	{
+		instantiatedShips[idPlayer].GetComponent<Ship>().Movement(horizontalAxis, verticalAxis);
+	}
+
+	public void PlayerFire(int idPlayer)
+    {
+		instantiatedShips[idPlayer].GetComponentInChildren<ShootHandler>().Shoot();
+    }
+
 }

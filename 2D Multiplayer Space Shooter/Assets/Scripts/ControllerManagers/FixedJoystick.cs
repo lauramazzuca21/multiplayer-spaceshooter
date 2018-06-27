@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class FixedJoystick : Joystick
 {
@@ -8,11 +9,14 @@ public class FixedJoystick : Joystick
 
     Vector2 joystickPosition = Vector2.zero;
     private Camera cam;
+	[SerializeField]
+	private Text _playerIDText;
 
-    void Start()
+	void Start()
     {
 		cam = GetComponent<Camera>();
         joystickPosition = RectTransformUtility.WorldToScreenPoint(cam, background.position);
+		_playerIDText.text = FindObjectOfType<NetworkClientUI>().PlayerID.ToString();
     }
 
 	//IDragHandler - OnDrag - Called on the drag object when a drag is happening

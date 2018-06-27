@@ -9,7 +9,7 @@ public enum Colours { BLUE, GREEN, ORANGE, RED };
 public enum Players { FIRST, SECOND, THIRD, FOURTH };
 
 public struct Choice {
-	public string IDPlayer;
+	public int IDPlayer;
 	public int shipChosen;
 }
 

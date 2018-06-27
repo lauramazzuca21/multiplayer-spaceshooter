@@ -51,10 +51,10 @@ public class ShootHandler : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	private void Update () {
+	public void Shoot () {
 		_cooldownTimer -= Time.deltaTime;
 
-		if (Input.GetButton("Fire1") && _cooldownTimer <= 0) {
+		if (_cooldownTimer <= 0) {
 			_cooldownTimer = DEFAULT_FIREDELAY;
 			if (_powerupHandler.EnhancedShotStatus)
 			{

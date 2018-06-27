@@ -401,6 +401,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21e9cd6aefe4e694babb237af9ca2218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _codeText: {fileID: 0}
+  _activePlayersText: {fileID: 0}
+  _IPText: {fileID: 0}
+  _statusText: {fileID: 0}
 --- !u!4 &544950153
 Transform:
   m_ObjectHideFlags: 0
@@ -571,6 +575,22 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4679551999591204, guid: 55388ebf0aed74e56bf1ca16db2dac32, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4956742385859370, guid: 55388ebf0aed74e56bf1ca16db2dac32, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1186210949695898, guid: 55388ebf0aed74e56bf1ca16db2dac32, type: 2}
+      propertyPath: m_Name
+      value: P2_position
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818766691922636, guid: 55388ebf0aed74e56bf1ca16db2dac32, type: 2}
+      propertyPath: m_Name
+      value: P3_position
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 55388ebf0aed74e56bf1ca16db2dac32, type: 2}

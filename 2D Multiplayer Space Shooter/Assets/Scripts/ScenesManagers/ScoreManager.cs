@@ -14,10 +14,11 @@ public class ScoreManager : MonoBehaviour
 
     private LevelManager levelManager;
 
+
 	void Start()
     {
-        _scorePlayer = new int[4];
-		_maxKills = 10;
+		_scorePlayer = new int[FindObjectOfType<ShipsManager>().ActivePlayers];
+		_maxKills = PlayerPrefsManager.GetEliminations();
         Reset();
         levelManager = FindObjectOfType<LevelManager>();
     }

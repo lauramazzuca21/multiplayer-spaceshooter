@@ -61,7 +61,11 @@ public class PowerupHandler : MonoBehaviour
 
     public void ShieldsOn()
 	{
-		if (!ShieldsStatus) ActivateShield();
+		if (!ShieldsStatus)
+		{
+			ActivateShield();
+			StartCoroutine(ShieldsPowerDown());
+		}
 	}
 
 

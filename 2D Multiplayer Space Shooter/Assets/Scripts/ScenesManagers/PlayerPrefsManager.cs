@@ -35,4 +35,29 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat(EFFECTS_KEY, volume);
     }
+
+	public static int GetEliminations()
+    {
+        return PlayerPrefs.GetInt(ELIMINATIONS_KEY);
+    }
+
+	public static bool GetPowerupOO()
+    {
+		return PlayerPrefs.GetInt(MUSIC_KEY) == 0 ? false : true;
+    }
+
+	public static float GetPowerupFrequency()
+    {
+		return PlayerPrefs.GetFloat(POWERUP_FREQUENCY_KEY);
+    }
+
+	public static float GetMusicVolume()
+    {
+		return PlayerPrefs.GetFloat(MUSIC_KEY);
+    }
+
+	public static float GetEffectsVolume()
+    {
+		return PlayerPrefs.GetFloat(EFFECTS_KEY);
+    }
 }
