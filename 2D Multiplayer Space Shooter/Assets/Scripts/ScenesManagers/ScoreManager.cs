@@ -10,7 +10,7 @@ public class ScoreManager : MonoBehaviour
     private int _maxKills;
 
     [SerializeField]
-	private Text[] _textPlayerScore;
+	public Text[] _textPlayerScore;
 
     private LevelManager levelManager;
 
