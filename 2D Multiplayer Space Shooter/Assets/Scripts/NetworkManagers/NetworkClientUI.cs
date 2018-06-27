@@ -35,8 +35,6 @@ public class NetworkClientUI : MonoBehaviour
 	[SerializeField]
     private Text _statusText;
 	[SerializeField]
-    private Text _peerTypeText;
-	[SerializeField]
     private Text _playerText;
 
 	private LevelManager _levelManager;
@@ -68,7 +66,7 @@ public class NetworkClientUI : MonoBehaviour
 	public void Connect()
     {
 		//Network.Connect("192.168.43.45", 25000, _codeText.text);
-        client.Connect("192.168.43.45", 25000);
+		client.Connect(_codeText.text, 25000);
 
 		StartCoroutine(this.Wait());
 
@@ -118,13 +116,18 @@ public class NetworkClientUI : MonoBehaviour
 		{
 			playerID = Convert.ToInt32(deltas[1]);
 			PlayerID = playerID;
-		}
-
+		}      
 		else if (deltas[0] == "health") 
 		{
 			float health = Convert.ToSingle(deltas[1]);
 			FindObjectOfType<ProgressBar>().UpdateHealthBar(health);
 		}
+		else if (deltas[0] == "MAXhealth")
+        {
+            float health = Convert.ToSingle(deltas[1]);
+            FindObjectOfType<ProgressBar>().SetMaxHealth(health);
+        }
+
 	}
 
 

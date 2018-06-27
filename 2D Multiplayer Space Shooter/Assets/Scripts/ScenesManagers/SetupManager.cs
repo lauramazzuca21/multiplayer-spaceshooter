@@ -15,20 +15,30 @@ public class SetupManager : MonoBehaviour {
 	private Slider musicVolumeSlider;
 	[SerializeField]
 	private Slider effectsVolumeSlider;
-    
-   
+
+
+	private void Start()
+	{
+		eliminationsSlider.value = PlayerPrefsManager.GetEliminations();
+		powerupToggle.isOn = PlayerPrefsManager.GetPowerupOO() ? true : false;
+		frequencySlider.value = PlayerPrefsManager.GetPowerupFrequency();
+		musicVolumeSlider.value = PlayerPrefsManager.GetMusicVolume();
+		effectsVolumeSlider.value = PlayerPrefsManager.GetEffectsVolume();
+
+	}
 
 	private void Update()
 	{
 		MusicPlayer.ChangeMusicValue(musicVolumeSlider.value);
+       
 	}
     
-
+    
 	public void SaveAndExit() {
 		
 		PlayerPrefsManager.SetEliminations((int) eliminationsSlider.value);
 
-		if (powerupToggle.enabled) PlayerPrefsManager.SetPowerupOO(1);
+		if (powerupToggle.isOn) PlayerPrefsManager.SetPowerupOO(1);
 		else PlayerPrefsManager.SetPowerupOO(0);
 
 		PlayerPrefsManager.SetPowerupFrequency(frequencySlider.value);

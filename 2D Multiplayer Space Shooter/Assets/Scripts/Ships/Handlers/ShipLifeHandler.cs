@@ -51,10 +51,10 @@ public class ShipLifeHandler : MonoBehaviour
     {
 		//_deathAnimation.SetBool("ShipIsDead", true);
 
-		NetworkServerUI.SendHelathInfo(Health);
+		if (gameObject.layer != INVULN_LAYER && !_isDead) 
+			NetworkServerUI.SendHealthInfo((gameObject.layer - Constants.LAYER_OFFSET) + 1, Health, false);      
 
-
-        if (this.gameObject.layer == INVULN_LAYER)
+		if (this.gameObject.layer == INVULN_LAYER && !_isDead)
         {
             _invulnTimer -= Time.deltaTime;
 
@@ -74,10 +74,11 @@ public class ShipLifeHandler : MonoBehaviour
 	public void TakeDamage(int playerID, float damageTaken)
     {
         Health -= damageTaken;
-        gameObject.layer = INVULN_LAYER;
-        _invulnTimer = INVULN_TIMER;
 
 		if (Health <= 0) Die(playerID);
+
+		gameObject.layer = INVULN_LAYER;
+        _invulnTimer = INVULN_TIMER;
     }
 
 }

@@ -33,6 +33,8 @@ public class StrongShip : Ship
         _shootHandler.DamageDealtModifier = DAMAGE_DEALT_MODIFIER;
 		ResetHealth();
 
+		NetworkServerUI.SendHealthInfo((gameObject.layer - Constants.LAYER_OFFSET) + 1, HEALTH, true);
+
     }
 
     // Update is called once per frame
@@ -78,25 +80,21 @@ public class StrongShip : Ship
    
 	public override void Movement(float horizontalAxis, float verticalAxis)
     {
-        //** ROTATE THE SHIP **//
-        Quaternion rot = transform.rotation;
-        float z = rot.eulerAngles.z;
-
-        //minus to get the std rotaton (dxdx, sxsx)
-        z -= horizontalAxis * RotSpeed * Time.deltaTime;
-        rot = Quaternion.Euler(0, 0, z);
-        transform.rotation = rot;
+		//** ROTATE THE SHIP **//
+        transform.eulerAngles = new Vector3(0, 0, -Mathf.Atan2(horizontalAxis, verticalAxis) * Mathf.Rad2Deg);
 
         //** MOVE THE SHIP **//
+
         Vector3 pos = transform.position;
 
         // Input.GetAxis returns a FLOAT between -1.0 and 1.0 0 if not pressed
-        Vector3 newPos = new Vector3(0, verticalAxis * MaxSpeed * Time.deltaTime, 0);
+        Vector3 newPos = new Vector3(horizontalAxis * MaxSpeed * Time.deltaTime,
+                                     verticalAxis * MaxSpeed * Time.deltaTime, 0);
 
-        pos += rot * newPos;
+        pos += newPos;
 
-        //RESTRICT player to the cameras boundaries
         pos = this.BoundariesRestrictions(pos);
+
 
         transform.position = pos;
     }

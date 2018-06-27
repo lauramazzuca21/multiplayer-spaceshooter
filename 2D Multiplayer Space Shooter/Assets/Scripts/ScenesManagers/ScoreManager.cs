@@ -1,37 +1,59 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    private int[] _scorePlayer;
+	static ScoreManager _instance = null;
+
+
+    private void Awake()
+    {
+        if (_instance != null) { Destroy(gameObject); }
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }   
+
+
+	public int[] _scorePlayer;
 
     private int _maxKills;
 
     [SerializeField]
-	public Text[] _textPlayerScore;
+	private Text[] _textPlayerScore;
 
     private LevelManager levelManager;
-
+	private string _currentScene;
 
 	void Start()
     {
 		_maxKills = PlayerPrefsManager.GetEliminations();
-        
-        Reset();
+		_currentScene = SceneManager.GetActiveScene().ToString();
+
     }
 
 	private void Update()
 	{
-		if (FindObjectOfType<ShipsManager>().ActivePlayers != 0 && _scorePlayer == null) 
+		_currentScene = SceneManager.GetActiveScene().name;
+
+		if (_currentScene == Constants.GAMEPLAY_SCENE)
 		{
-			_scorePlayer = new int[FindObjectOfType<ShipsManager>().ActivePlayers];
-			Debug.Log("Active players: " + _scorePlayer.Length + " MaxKills: " + _maxKills);         
-		}
-		if (levelManager == null)
-		{
-			levelManager = FindObjectOfType<LevelManager>();
+			if (FindObjectOfType<ShipsManager>().ActivePlayers != 0 && _scorePlayer == null)
+            {
+                _scorePlayer = new int[FindObjectOfType<ShipsManager>().ActivePlayers];
+				Debug.Log("created _scorePlayer with " + FindObjectOfType<ShipsManager>().ActivePlayers);
+
+                Reset();
+            }
+            if (levelManager == null)
+            {
+                levelManager = FindObjectOfType<LevelManager>();
+            }
 		}
 
 	}
@@ -49,10 +71,17 @@ public class ScoreManager : MonoBehaviour
 
     public void Reset()
     {
-        for(int i = 0; i<_scorePlayer.Length; i++)
+		int i;
+        for(i = 0; i< _scorePlayer.Length; i++)
         {
             _scorePlayer[i] = 0;
             _textPlayerScore[i].text = _scorePlayer[i].ToString();
+        }
+        
+		for (int j = i; j < 4; j++)
+        {
+			_textPlayerScore[j].gameObject.SetActive(false);
+
         }
     }
 }

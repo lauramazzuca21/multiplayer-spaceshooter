@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class ProgressBar : MonoBehaviour {
 
@@ -14,6 +15,7 @@ public class ProgressBar : MonoBehaviour {
 	private bool _firstRecharge = true;
 	[Range(0, 100)] public float currentPercent;
 	[Range(0, 100)] public int speed;
+	private float MAX_HEALTH;
 
 
 	private void Start()
@@ -44,6 +46,11 @@ public class ProgressBar : MonoBehaviour {
 
     public void UpdateHealthBar(float health)
 	{
-		currentPercent = health;
+		currentPercent = health/MAX_HEALTH;
 	}
+
+    internal void SetMaxHealth(float health)
+    {
+		MAX_HEALTH = health;
+    }
 }
