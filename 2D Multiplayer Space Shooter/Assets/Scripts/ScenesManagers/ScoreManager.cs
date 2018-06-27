@@ -20,12 +20,12 @@ public class ScoreManager : MonoBehaviour
     }   
 
 
-	private int[] _scorePlayer;
+	public int[] _scorePlayer;
 
     private int _maxKills;
 
     [SerializeField]
-	public Text[] _textPlayerScore;
+	private Text[] _textPlayerScore;
 
     private LevelManager levelManager;
 	private string _currentScene;
@@ -33,17 +33,21 @@ public class ScoreManager : MonoBehaviour
 	void Start()
     {
 		_maxKills = PlayerPrefsManager.GetEliminations();
+		_currentScene = SceneManager.GetActiveScene().ToString();
+
     }
 
 	private void Update()
 	{
-		_currentScene = SceneManager.GetActiveScene().ToString();
+		_currentScene = SceneManager.GetActiveScene().name;
 
 		if (_currentScene == Constants.GAMEPLAY_SCENE)
 		{
 			if (FindObjectOfType<ShipsManager>().ActivePlayers != 0 && _scorePlayer == null)
             {
                 _scorePlayer = new int[FindObjectOfType<ShipsManager>().ActivePlayers];
+				Debug.Log("created _scorePlayer with " + FindObjectOfType<ShipsManager>().ActivePlayers);
+
                 Reset();
             }
             if (levelManager == null)
@@ -68,7 +72,7 @@ public class ScoreManager : MonoBehaviour
     public void Reset()
     {
 		int i;
-        for(i = 0; i<_scorePlayer.Length; i++)
+        for(i = 0; i< _scorePlayer.Length; i++)
         {
             _scorePlayer[i] = 0;
             _textPlayerScore[i].text = _scorePlayer[i].ToString();
@@ -76,7 +80,7 @@ public class ScoreManager : MonoBehaviour
         
 		for (int j = i; j < 4; j++)
         {
-			_textPlayerScore[i].gameObject.SetActive(false);
+			_textPlayerScore[j].gameObject.SetActive(false);
 
         }
     }
