@@ -8,7 +8,7 @@ using System.Collections;
 public class ResistantShip : Ship
 {
 
-	public const float MAX_SPEED = 3f;
+	public const float MAX_SPEED = 4f;
 	public const float ROT_SPEED = 110f;
 	public const float DAMAGE_DEALT_MODIFIER = 0.5f;
 	public const float HEALTH = 20f;

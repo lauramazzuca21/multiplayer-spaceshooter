@@ -10,7 +10,7 @@ public class FastShip : Ship
 {
     // Use this for initialization   
 
-	public const float MAX_SPEED = 7f;
+	public const float MAX_SPEED = 6f;
 	public const float ROT_SPEED = 180f;   
 	public const float DAMAGE_DEALT_MODIFIER = 0.5f;
     public const float HEALTH = 20f;

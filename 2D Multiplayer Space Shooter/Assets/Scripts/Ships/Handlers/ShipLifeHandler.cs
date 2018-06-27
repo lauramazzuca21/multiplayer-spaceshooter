@@ -15,6 +15,8 @@ public class ShipLifeHandler : MonoBehaviour
     private float _invulnTimer;
     private bool _isDead;
     private float _health;
+	private ScoreManager _scoreManager;
+
 
     //per ora lo mettiamo commentato, poi vediamo se serve
     //private Animator _deathAnimation;
@@ -37,7 +39,7 @@ public class ShipLifeHandler : MonoBehaviour
     {
         _isDead = false;
         _invulnTimer = 0;
-    
+		_scoreManager = FindObjectOfType<ScoreManager>();
         _correctLayer = gameObject.layer;
 
         //per ora lo mettiamo commentato, poi vediamo se serve
@@ -47,7 +49,7 @@ public class ShipLifeHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Health <= 0) Die(); //_deathAnimation.SetBool("ShipIsDead", true);
+         //_deathAnimation.SetBool("ShipIsDead", true);
 
         
         if (this.gameObject.layer == INVULN_LAYER)
@@ -59,18 +61,21 @@ public class ShipLifeHandler : MonoBehaviour
         
     }
 
-    public void Die()
+	public void Die(int playerID)
     {
-        _isDead = true;
+		_scoreManager.UpdateScore(playerID); 
+		gameObject.layer = INVULN_LAYER;
+        _isDead = true;      
     }
 
 
-    public void TakeDamage(float damageTaken)
+	public void TakeDamage(int playerID, float damageTaken)
     {
         Health -= damageTaken;
         gameObject.layer = INVULN_LAYER;
         _invulnTimer = INVULN_TIMER;
 
+		if (Health <= 0) Die(playerID);
     }
 
 }

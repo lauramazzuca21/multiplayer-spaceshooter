@@ -17,19 +17,32 @@ public class ScoreManager : MonoBehaviour
 
 	void Start()
     {
-		_scorePlayer = new int[FindObjectOfType<ShipsManager>().ActivePlayers];
 		_maxKills = PlayerPrefsManager.GetEliminations();
+        
         Reset();
-        levelManager = FindObjectOfType<LevelManager>();
     }
-			
+
+	private void Update()
+	{
+		if (FindObjectOfType<ShipsManager>().ActivePlayers != 0 && _scorePlayer == null) 
+		{
+			_scorePlayer = new int[FindObjectOfType<ShipsManager>().ActivePlayers];
+			Debug.Log("Active players: " + _scorePlayer.Length + " MaxKills: " + _maxKills);         
+		}
+		if (levelManager == null)
+		{
+			levelManager = FindObjectOfType<LevelManager>();
+		}
+
+	}
+
 	public void UpdateScore(int playerID) //player 0-3
     {
-        Debug.Log("Scored points");
+		Debug.Log("Scored points: playerLayer " + playerID);
         _scorePlayer[playerID - Constants.LAYER_OFFSET]++;
         _textPlayerScore[playerID-Constants.LAYER_OFFSET].text = _scorePlayer[playerID - Constants.LAYER_OFFSET].ToString();
 
-        if (_scorePlayer[playerID - Constants.LAYER_OFFSET] == _maxKills) {
+        if (_scorePlayer[playerID - Constants.LAYER_OFFSET] >= _maxKills) {
             levelManager.LoadScene(Constants.GAMEOVER_SCENE);
         }
     }

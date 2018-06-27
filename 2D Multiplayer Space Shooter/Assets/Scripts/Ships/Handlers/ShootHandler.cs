@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ShootHandler : MonoBehaviour {
 
-    private static readonly float DEFAULT_FIREDELAY = 0.25f;
+	private static readonly float DEFAULT_FIREDELAY = 0.05f;
 
-	[SerializeField]
+   [SerializeField]
 	private GameObject _bulletPrefab;
 	[SerializeField]
 	private GameObject _enhancedBulletPrefab;
@@ -55,13 +55,10 @@ public class ShootHandler : MonoBehaviour {
 		_cooldownTimer -= Time.deltaTime;
 
 		if (_cooldownTimer <= 0) {
-			_cooldownTimer = DEFAULT_FIREDELAY;
 			if (_powerupHandler.EnhancedShotStatus)
 			{
 				bullet = Instantiate(_enhancedBulletPrefab, transform.position, transform.rotation);
-				bullet.layer = gameObject.layer;
-              
-
+				bullet.layer = gameObject.layer;            
 
 				bulletFunctions = bullet.GetComponent<Bullet>();            
 				//modifier so that the bullet damages the enemies its default value times the owner ship modifier
@@ -71,7 +68,7 @@ public class ShootHandler : MonoBehaviour {
 				AudioSource.PlayClipAtPoint(_enhancedBulletSound, transform.position);
 
 				_powerupHandler.EnhancedShotStatus = false;
-
+				_cooldownTimer = DEFAULT_FIREDELAY;
 			} 
 			else 
 			{
@@ -84,6 +81,8 @@ public class ShootHandler : MonoBehaviour {
 				bulletFunctions.Damage = bulletFunctions.Damage * _damageDealtModifier;
             
 				AudioSource.PlayClipAtPoint(_bulletSound, transform.position);
+
+				_cooldownTimer = DEFAULT_FIREDELAY;
 			}
 
 		}

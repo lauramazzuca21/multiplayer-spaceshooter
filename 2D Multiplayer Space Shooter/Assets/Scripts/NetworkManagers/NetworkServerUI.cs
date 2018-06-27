@@ -141,9 +141,7 @@ public class NetworkServerUI : MonoBehaviour {
 	private void GamePlaySceneParsingHandler(StringMessage msg)
     {
         string[] deltas = msg.value.Split('|');
-
-		Debug.Log("Message ID " + deltas[0]);
-
+        
 		if (deltas.Length == 2)
 		{
 			_shipsManager.PlayerFire(Convert.ToInt32(deltas[0]));
