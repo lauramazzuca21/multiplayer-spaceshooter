@@ -35,13 +35,9 @@ public class NetworkServerUI : MonoBehaviour {
 	private string _currentScene;
 
 	[SerializeField]
-	private Text _codeText;
-	[SerializeField]
     private Text _activePlayersText;
 	[SerializeField]
     private Text _IPText;
-	[SerializeField]
-    private Text _statusText;
 
 
     CrossPlatformInputManager.VirtualAxis m_HVAxis;
@@ -68,8 +64,8 @@ public class NetworkServerUI : MonoBehaviour {
        
 		Network.InitializeSecurity();
 
-		_codeText.text = Utilities.RandomCode(Constants.CODE_LENGTH); //displays the rand code
-		Network.incomingPassword = _codeText.text; //sets the password for connection as the rand generated code      
+		//_codeText.text = Utilities.RandomCode(Constants.CODE_LENGTH); //displays the rand code
+		//Network.incomingPassword = _codeText.text; //sets the password for connection as the rand generated code      
 		//Network.InitializeServer(4, 25000, false);
 
 		NetworkServer.Listen(25000);
@@ -94,7 +90,6 @@ public class NetworkServerUI : MonoBehaviour {
 
             _IPText.text = Network.player.ipAddress;
 
-           _statusText.text = NetworkServer.active.ToString();
 			//_statusText.text = Network.isServer.ToString();
 
         }
@@ -230,8 +225,19 @@ public class NetworkServerUI : MonoBehaviour {
     }
 
 
-	public static void SendHelathInfo(float health)
+	public static void SendHealthInfo(int IDPlayer, float health, bool isMax)
     {
+		StringMessage msg = new StringMessage();
 
+		if (isMax)
+		{
+			msg.value = "MAXhealth|" + health;
+		} else {
+			msg.value = "health|" + health;
+		}
+
+
+
+		NetworkServer.SendToClient(IDPlayer, 888, msg);
     }
 }

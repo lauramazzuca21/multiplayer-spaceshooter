@@ -32,6 +32,8 @@ public class FastShip : Ship
         ShipBoundaryRadius = BOUNDARY_RADIUS;
 
 		_shootHandler.DamageDealtModifier = DAMAGE_DEALT_MODIFIER;
+
+		NetworkServerUI.SendHealthInfo((gameObject.layer - Constants.LAYER_OFFSET) + 1, HEALTH, true);
 		ResetHealth();      
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,57 +12,81 @@ public class ScoreScreenManager : MonoBehaviour
     [SerializeField]
     private Text[] _textFinalScore;
 
-    public ScoreManager scoreManager;
+	private ScoreManager scoreManager;
 
 
     // Use this for initialization
     void Start()
     {
-        ResetTexts();
         scoreManager = FindObjectOfType<ScoreManager>();
         SetTexts(scoreManager._textPlayerScore);
+		ResetTexts();
     }
 
     // Update is called once per frame
     public void ResetTexts()
     {
+		int i;
 
-        for (int i = 0; i < 4; i++)
+		for ( i = 0; i < scoreManager._textPlayerScore.Length; i++)
         {
             _textPlayerID[i].text = "";
             _textFinalScore[i].text = "";
+        }
+        
+		for (int j = i; j < 4; j++)
+        {
+			_textPlayerID[i].gameObject.SetActive(false);
+			_textFinalScore[i].gameObject.SetActive(false);
         }
 
     }
 
     public void SetTexts(Text[] _textPlayersScore)
     {
-        int j = 0;
-        int i = 0;
-        string scoreMax = _textPlayersScore[i].text;
-        int intMax = 0;
-        int[] pos = new int[4];
-        pos[0] = 5;
-        pos[1] = 5;
-        pos[2] = 5;
-        pos[3] = 5;
+        
+		int[] pos = new int[_textPlayersScore.Length];
 
-        for (j = 0; j < 4; j++)
+		for (int i = 0; i < _textPlayersScore.Length; i++)
         {
+			pos[i] = Convert.ToInt32(_textPlayersScore[i].text);
+        }
 
-            for (i = 0; i < 4; i++) //FIX I<4
+		Array.Sort(pos);
+
+
+		//for (int i = 0; i < _textPlayersScore.Length; i++)
+        //{
+        //    pos[i] = Convert.ToInt32(_textPlayersScore[i].text);
+        //}
+
+        //int j = 0;
+        //int i = 0;
+        //string scoreMax = _textPlayersScore[i].text;
+        //int intMax = 0;
+        //int[] pos = new int[4];
+        //pos[0] = 5;
+        //pos[1] = 5;
+        //pos[2] = 5;
+        //pos[3] = 5;
+
+
+		for (int j = 0; j < pos.Length; j++)
+        {
+            for (int i = 0; i < _textPlayersScore.Length; i++) //FIX I<4
             {
-                if ((_textPlayersScore[i].text.CompareTo(scoreMax) > 0) && i != pos[0] && i != pos[1] && i != pos[2] && i != pos[3])
+				if (Convert.ToInt32(_textPlayersScore[i].text) == pos[j])
                 {
-                    scoreMax = _textPlayersScore[i].text;
-                    intMax = i;
+					_textPlayerID[j].text = "Player " + (i+1).ToString();
+					_textPlayersScore[j].text = _textPlayersScore[i].text;
                 }
             }
 
-            pos[j] = intMax;
-            _textPlayerID[j].text = "Player " + (intMax + 1).ToString();
-            _textPlayersScore[j].text = scoreMax;
+   //         pos[j] = intMax;
+            
 
+			//scoreMax = "";
+			//intMax = 0;
         }
     }
 }
