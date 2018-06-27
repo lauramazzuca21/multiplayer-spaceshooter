@@ -78,28 +78,26 @@ public class FastShip : Ship
         _lifeHandler.Health = HEALTH;
     }
    
-	public override void Movement(float horizontalAxis, float verticalAxis){
+	public override void Movement(float horizontalAxis, float verticalAxis)
+	{
 		//** ROTATE THE SHIP **//
-        Quaternion rot = transform.rotation;
-        float z = rot.eulerAngles.z;
+		transform.eulerAngles = new Vector3(0, 0, -Mathf.Atan2(horizontalAxis, verticalAxis) * Mathf.Rad2Deg);
+        
+		//** MOVE THE SHIP **//
 
-        //minus to get the std rotaton (dxdx, sxsx)
-		z -= horizontalAxis * RotSpeed * Time.deltaTime;
-        rot = Quaternion.Euler(0, 0, z);
-        transform.rotation = rot;
-
-        //** MOVE THE SHIP **//
-       Vector3 pos = transform.position;
+		Vector3 pos = transform.position;
 
         // Input.GetAxis returns a FLOAT between -1.0 and 1.0 0 if not pressed
-		Vector3 newPos = new Vector3(0, verticalAxis * MaxSpeed * Time.deltaTime, 0);
+		Vector3 newPos = new Vector3(horizontalAxis * MaxSpeed * Time.deltaTime,
+		                             verticalAxis * MaxSpeed * Time.deltaTime, 0);
+                                     
+		pos += newPos;
 
-        pos += rot * newPos;
+		pos = this.BoundariesRestrictions(pos);
 
-        //RESTRICT player to the cameras boundaries
-        pos = this.BoundariesRestrictions(pos);
 
-        transform.position = pos;
+		transform.position = pos;
+     
 	}
 
 

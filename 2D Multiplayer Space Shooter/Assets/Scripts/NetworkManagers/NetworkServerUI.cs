@@ -136,7 +136,6 @@ public class NetworkServerUI : MonoBehaviour {
         
     }
    
-   
  
 	private void GamePlaySceneParsingHandler(StringMessage msg)
     {
@@ -228,5 +227,11 @@ public class NetworkServerUI : MonoBehaviour {
             FindObjectOfType<MoveThroughUI>().UpdateUIOnConnection(hDelta);
 
         }
+    }
+
+
+	public static void SendHelathInfo(float health)
+    {
+
     }
 }

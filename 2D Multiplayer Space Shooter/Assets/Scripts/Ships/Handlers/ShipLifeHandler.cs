@@ -49,9 +49,11 @@ public class ShipLifeHandler : MonoBehaviour
 
     private void Update()
     {
-         //_deathAnimation.SetBool("ShipIsDead", true);
+		//_deathAnimation.SetBool("ShipIsDead", true);
 
-        
+		NetworkServerUI.SendHelathInfo(Health);
+
+
         if (this.gameObject.layer == INVULN_LAYER)
         {
             _invulnTimer -= Time.deltaTime;
