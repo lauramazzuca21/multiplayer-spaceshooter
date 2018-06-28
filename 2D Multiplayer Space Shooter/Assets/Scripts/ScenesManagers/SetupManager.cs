@@ -21,7 +21,14 @@ public class SetupManager : MonoBehaviour {
 	{
 		eliminationsSlider.value = PlayerPrefsManager.GetEliminations();
 		powerupToggle.isOn = PlayerPrefsManager.GetPowerupOO() ? true : false;
-		frequencySlider.value = PlayerPrefsManager.GetPowerupFrequency();
+
+		if(powerupToggle.isOn) 
+		{
+			frequencySlider.gameObject.SetActive(true);
+			frequencySlider.value = PlayerPrefsManager.GetPowerupFrequency();
+		} else {
+			frequencySlider.gameObject.SetActive(false);
+		}
 		musicVolumeSlider.value = PlayerPrefsManager.GetMusicVolume();
 		effectsVolumeSlider.value = PlayerPrefsManager.GetEffectsVolume();
 

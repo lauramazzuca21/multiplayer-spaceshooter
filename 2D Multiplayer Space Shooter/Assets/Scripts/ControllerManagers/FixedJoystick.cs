@@ -16,7 +16,8 @@ public class FixedJoystick : Joystick
     {
 		cam = GetComponent<Camera>();
         joystickPosition = RectTransformUtility.WorldToScreenPoint(cam, background.position);
-		_playerIDText.text = FindObjectOfType<NetworkClientUI>().PlayerID.ToString();
+		//_playerIDText.text = FindObjectOfType<NetworkClientUI>().playerID.ToString();
+		_playerIDText.gameObject.SetActive(false);
     }
 
 	//IDragHandler - OnDrag - Called on the drag object when a drag is happening

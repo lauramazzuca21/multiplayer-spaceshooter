@@ -22,17 +22,25 @@ public class PowerUpManager : MonoBehaviour
     private GameObject _enhancedShotPrefab;
 	[SerializeField]
     private GameObject _shieldPrefab;
+      
 
-    // Use this for initialization
-    void Start()
+	// Use this for initialization
+	void Start()
     {
-		timer = SPAWN_TIMER_VALUE;
+		float frequency = PlayerPrefsManager.GetPowerupFrequency();
+		timer = frequency <= 0 ? SPAWN_TIMER_VALUE : SPAWN_TIMER_VALUE * (frequency/100);
+
+		Debug.Log("timer set as " + timer + "frequency was " + frequency);
 		randomSpawn = new Vector3(0, 0, 0);
+
+		if (!PlayerPrefsManager.GetPowerupOO()) this.gameObject.SetActive(false);
+
     } 
 
     // Update is called once per frame
     void Update()
-    {
+	{
+
 		timer -= Time.deltaTime;
         
         if (timer <= 0)

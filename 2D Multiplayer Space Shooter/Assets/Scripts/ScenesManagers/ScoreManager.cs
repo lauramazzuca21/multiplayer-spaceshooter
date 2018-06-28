@@ -40,13 +40,20 @@ public class ScoreManager : MonoBehaviour
 	private void Update()
 	{
 		_currentScene = SceneManager.GetActiveScene().name;
+		Debug.Log("currentScene " + _currentScene);
+
 
 		if (_currentScene == Constants.GAMEPLAY_SCENE)
 		{
-			if (FindObjectOfType<ShipsManager>().ActivePlayers != 0 && _scorePlayer == null)
+			Debug.Log("DENTRO IF. OnOff " + PlayerPrefsManager.GetPowerupOO()
+			          + " frequency " + PlayerPrefsManager.GetPowerupFrequency());
+			
+			int ActivePlayer = FindObjectOfType<ShipsManager>().ActivePlayers;
+
+			if (ActivePlayer != 0 && _scorePlayer.Length < ActivePlayer)
             {
-                _scorePlayer = new int[FindObjectOfType<ShipsManager>().ActivePlayers];
-				Debug.Log("created _scorePlayer with " + FindObjectOfType<ShipsManager>().ActivePlayers);
+				_scorePlayer = new int[ActivePlayer];
+				Debug.Log("created _scorePlayer with " + ActivePlayer);
 
                 Reset();
             }

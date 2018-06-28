@@ -12,7 +12,8 @@ public class MusicPlayer : MonoBehaviour
         else 
 		{
 			_instance = this;
-			DontDestroyOnLoad(gameObject); 
+			DontDestroyOnLoad(gameObject);
+			_instance.GetComponent<AudioSource>().volume = PlayerPrefsManager.GetMusicVolume();
 		}
 	}
 

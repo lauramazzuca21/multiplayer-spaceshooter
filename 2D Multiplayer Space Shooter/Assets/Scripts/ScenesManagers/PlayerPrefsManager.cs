@@ -18,7 +18,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static void SetPowerupOO(int setting)
     {
-        PlayerPrefs.SetInt(MUSIC_KEY, setting);
+		PlayerPrefs.SetInt(POWERUP_OO_KEY, setting);
     }
 
     public static void SetPowerupFrequency(float frequency)
@@ -43,7 +43,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
 	public static bool GetPowerupOO()
     {
-		return PlayerPrefs.GetInt(MUSIC_KEY) == 0 ? false : true;
+		return PlayerPrefs.GetInt(POWERUP_OO_KEY) == 0 ? false : true;
     }
 
 	public static float GetPowerupFrequency()

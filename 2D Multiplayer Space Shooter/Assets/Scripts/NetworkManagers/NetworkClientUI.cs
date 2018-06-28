@@ -25,10 +25,9 @@ public class NetworkClientUI : MonoBehaviour
 
     static NetworkClient client;
 	//static NetworkConnection connection;
-
+    
 	static public Ships ShipChosen { get; set; }
 	public static int playerID;
-	public int PlayerID { get; private set; }
 	private bool _isFirstPlayer = false;
 	[SerializeField]
 	private Text _codeText;
@@ -38,7 +37,7 @@ public class NetworkClientUI : MonoBehaviour
     private Text _playerText;
 
 	private LevelManager _levelManager;
-	private Func<Scene> _currentScene;
+	private string _currentScene;
 	private bool _foundTextField;
 
 	private void OnGUI()
@@ -110,12 +109,10 @@ public class NetworkClientUI : MonoBehaviour
 		{
 			_isFirstPlayer = true;
 			playerID = 0;
-			PlayerID = playerID;
 		}
 		else if (deltas[0] == "ID")
 		{
 			playerID = Convert.ToInt32(deltas[1]);
-			PlayerID = playerID;
 		}      
 		else if (deltas[0] == "health") 
 		{
@@ -159,16 +156,13 @@ public class NetworkClientUI : MonoBehaviour
 
 		//_statusText.text = client.isConnected.ToString();
 
-		_currentScene = SceneManager.GetActiveScene;
+		_currentScene = SceneManager.GetActiveScene().name;
 
-		if (_currentScene.ToString() == Constants.CONTROLLER_SCENE)
+		if (_currentScene == Constants.CONTROLLER_SCENE)
 		{
 			if((_playerText = FindObjectOfType<Text>()).text == "" && !_foundTextField)
 			{
 				_foundTextField = true;
-			}
-			else
-			{
 				_playerText.text = playerID.ToString();
 			}
 

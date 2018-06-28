@@ -152,6 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textToUpdate: {fileID: 112984133}
   slider: {fileID: 1789359737}
+  isPercent: 0
 --- !u!1 &224232882
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,7 +400,7 @@ Prefab:
     - target: {fileID: 114290119574378158, guid: 9422462ad345f412984cb7a6f508264c,
         type: 2}
       propertyPath: m_Value
-      value: 0
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 114290119574378158, guid: 9422462ad345f412984cb7a6f508264c,
         type: 2}
@@ -916,6 +917,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textToUpdate: {fileID: 593257163}
   slider: {fileID: 1794444199}
+  isPercent: 1
 --- !u!224 &594894287 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224637290968360734, guid: 9c1dffd0d95cd43e1baff4dc4de15952,
@@ -1085,6 +1087,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textToUpdate: {fileID: 659043969}
   slider: {fileID: 390307805}
+  isPercent: 1
 --- !u!1 &688090767 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1417835628455366, guid: 767098747608a43658710594eacc190d,
@@ -1620,6 +1623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textToUpdate: {fileID: 933002771}
   slider: {fileID: 1800537228}
+  isPercent: 1
 --- !u!224 &949636956 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224216719391933204, guid: 4d1e76e102659455d916c55f741e5233,
@@ -3119,7 +3123,7 @@ Prefab:
     - target: {fileID: 114895024104646452, guid: 4d1e76e102659455d916c55f741e5233,
         type: 2}
       propertyPath: m_Value
-      value: 1
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114895024104646452, guid: 4d1e76e102659455d916c55f741e5233,
         type: 2}
@@ -3330,7 +3334,7 @@ Prefab:
     - target: {fileID: 114290119574378158, guid: 9422462ad345f412984cb7a6f508264c,
         type: 2}
       propertyPath: m_Value
-      value: 0
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 114290119574378158, guid: 9422462ad345f412984cb7a6f508264c,
         type: 2}
@@ -3602,7 +3606,7 @@ Prefab:
     - target: {fileID: 114290119574378158, guid: 9422462ad345f412984cb7a6f508264c,
         type: 2}
       propertyPath: m_Value
-      value: 0
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 114290119574378158, guid: 9422462ad345f412984cb7a6f508264c,
         type: 2}

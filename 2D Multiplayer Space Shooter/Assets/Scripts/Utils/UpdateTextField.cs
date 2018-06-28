@@ -9,9 +9,12 @@ public class UpdateTextField : MonoBehaviour {
 	private Text textToUpdate;
 	[SerializeField]
 	private Slider slider;
+	[SerializeField]
+	private bool isPercent;
 	
 	// Update is called once per frame
 	void Update () {
-		textToUpdate.text = slider.value.ToString();
+		if (!isPercent) textToUpdate.text = slider.value.ToString();
+		else textToUpdate.text = slider.value.ToString() + "%";
 	}
 }
