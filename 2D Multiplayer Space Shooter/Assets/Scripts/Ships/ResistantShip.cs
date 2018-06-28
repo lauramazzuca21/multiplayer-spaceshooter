@@ -29,8 +29,10 @@ public class ResistantShip : Ship
         RotSpeed = ROT_SPEED; //speed we can turn in 1 sec
         ShipBoundaryRadius = BOUNDARY_RADIUS;
 
-        _lifeHandler.Health = HEALTH;
+		ResetHealth();
         _shootHandler.DamageDealtModifier = DAMAGE_DEALT_MODIFIER;
+		_shootHandler.PlayerLayer = this.gameObject.layer;
+
 
 		NetworkServerUI.SendHealthInfo((gameObject.layer - Constants.LAYER_OFFSET) + 1, HEALTH, true);
 

@@ -46,7 +46,7 @@ public class ProgressBar : MonoBehaviour {
 
     public void UpdateHealthBar(float health)
 	{
-		currentPercent = health/MAX_HEALTH;
+		currentPercent = (health/MAX_HEALTH) * 100;
 	}
 
     internal void SetMaxHealth(float health)

@@ -44,6 +44,12 @@ public class ShootHandler : MonoBehaviour {
 		set { this._enhancedShotSpeed = value; }
     }
 
+	public int PlayerLayer
+    {
+        get ;
+		set ;
+    }
+
 	// Use this for initialization
 	private void Start () {
 		_cooldownTimer = DEFAULT_FIREDELAY;
@@ -58,7 +64,7 @@ public class ShootHandler : MonoBehaviour {
 			if (_powerupHandler.EnhancedShotStatus)
 			{
 				bullet = Instantiate(_enhancedBulletPrefab, transform.position, transform.rotation);
-				bullet.layer = gameObject.layer;            
+				bullet.layer = PlayerLayer;            
 
 				bulletFunctions = bullet.GetComponent<Bullet>();            
 				//modifier so that the bullet damages the enemies its default value times the owner ship modifier
@@ -73,7 +79,7 @@ public class ShootHandler : MonoBehaviour {
 			else 
 			{
 				bullet = Instantiate(_bulletPrefab, transform.position, transform.rotation);
-				bullet.layer = gameObject.layer;
+				bullet.layer = PlayerLayer;
                 
                 bulletFunctions = bullet.GetComponent<Bullet>();
 				//modifier so that the bullet damages the enemies its default value times the owner ship modifier\

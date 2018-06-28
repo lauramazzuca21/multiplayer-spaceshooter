@@ -30,7 +30,7 @@ public class EnhancedShot : PowerUp
 		PowerupHandler handler = shipCollided.GetComponentInChildren<PowerupHandler>();
 
 
-		if (shipCollided != null && handler != null)
+		if (shipCollided != null)
         {
 			handler.EnhancedShotOn(SHOT_DAMAGE, SHOT_SPEED);
             this.DestroyPowerUp();

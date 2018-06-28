@@ -33,6 +33,8 @@ public class FastShip : Ship
 
 		_shootHandler.DamageDealtModifier = DAMAGE_DEALT_MODIFIER;
 
+		_shootHandler.PlayerLayer = this.gameObject.layer;
+
 		NetworkServerUI.SendHealthInfo((gameObject.layer - Constants.LAYER_OFFSET) + 1, HEALTH, true);
 		ResetHealth();      
     }

@@ -76,9 +76,11 @@ public class ShipLifeHandler : MonoBehaviour
         Health -= damageTaken;
 
 		if (Health <= 0) Die(playerID);
-
-		gameObject.layer = INVULN_LAYER;
-        _invulnTimer = INVULN_TIMER;
+		else
+		{
+			gameObject.layer = INVULN_LAYER;
+			_invulnTimer = INVULN_TIMER;
+		}
     }
 
 }
